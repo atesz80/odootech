@@ -17,7 +17,7 @@ class Auto(object):
     
     @property
     def get_auto(self):
-        return(f'{self.type}, {self.ajtok_szama}, {self.marka}')
+        return(f'{self.id}, {self.type}, {self.ajtok_szama}, {self.marka}')
 
 @dataclass(frozen=True)
 class Bicikli(object):
@@ -31,12 +31,12 @@ class Bicikli(object):
     
     @property
     def get_bicikli(self):
-        return(f'{self.type}, {self.terhelhetoseg}, {self.marka}')
+        return(f'{self.id}, {self.type}, {self.terhelhetoseg}, {self.marka}')
 
 
 if __name__ == "__main__":
 
-    print(' -- A script futása elkezdődött! --')
+    pprint.pprint(' -- A script futása elkezdődött! --')
 
     def levalogatas(tipus: str = "auto") -> list:
 
@@ -81,5 +81,5 @@ if __name__ == "__main__":
 
     kiiratas(levalogatas(tipus='bicikli'))
 
-print(' -- A script futása befejeződött! --')
+pprint.pprint(' -- A script futása befejeződött! --')
 exit(0)
