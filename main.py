@@ -5,6 +5,7 @@ import pprint
 
 # -----------------------------------------------------------
 
+
 @dataclass(frozen=True)
 class Auto(object):
 
@@ -14,10 +15,11 @@ class Auto(object):
     type: int
     ajtok_szama: int
     marka: str
-    
+
     @property
     def get_auto(self):
-        return(f'{self.id}, {self.type}, {self.ajtok_szama}, {self.marka}')
+        return (f'{self.id}, {self.type}, {self.ajtok_szama}, {self.marka}')
+
 
 @dataclass(frozen=True)
 class Bicikli(object):
@@ -28,10 +30,22 @@ class Bicikli(object):
     type: int
     terhelhetoseg: int
     marka: str
-    
+
     @property
     def get_bicikli(self):
-        return(f'{self.id}, {self.type}, {self.terhelhetoseg}, {self.marka}')
+        return (f'{self.id}, {self.type}, {self.terhelhetoseg}, {self.marka}')
+
+
+def vehicle(tipus, *data):
+
+    """ Factory metódus """
+
+    vehicles = {
+        "auto": Auto,
+        "bicikli": Bicikli,
+    }
+
+    return vehicles[tipus](*data)
 
 
 if __name__ == "__main__":
@@ -40,12 +54,10 @@ if __name__ == "__main__":
 
     def levalogatas(tipus: str = "auto") -> list:
 
-
         """ Objektumok listáját adja vissza a függvény """
 
-
         lista = []
-        file_list = []            
+        file_list = []
 
         for dirpath, _, fnames in os.walk("./data"):
             for f in fnames:
@@ -54,26 +66,21 @@ if __name__ == "__main__":
 
         for file in file_list:
             with open(os.path.join(file['path'], file['file']), 'r') as f:
-                    
+
                 data = {'id': file['file']}
                 data.update(json.load(f))
 
                 if data['type'] == tipus:
-                    if tipus == 'auto':
-                        lista.append(Auto(*data.values()))
-
-                    elif tipus == 'bicikli':
-                        lista.append(Bicikli(*data.values()))
+                    lista.append(vehicle(tipus, *data.values()))
 
         if not lista:
-           
+
             pprint.pprint('Nincs ilyen eszköz!')
-    
+
         return lista
-    
 
     def kiiratas(lista: list) -> None:
-        
+
         """ Kiirja a függvény a képernyőre a listában lévő objektumokat """
 
         if lista:
