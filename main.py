@@ -36,7 +36,7 @@ class Bicikli(object):
         return (f'{self.id}, {self.type}, {self.terhelhetoseg}, {self.marka}')
 
 
-def vehicle(tipus, *data):
+def vehicle(tipus: str, *data: tuple) -> object:
 
     """ Factory metódus """
 
